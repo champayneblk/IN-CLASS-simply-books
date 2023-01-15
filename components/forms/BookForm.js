@@ -40,7 +40,7 @@ function BookForm({ obj }) {
     e.preventDefault();
     if (obj.firebaseKey) {
       updateBook(formInput)
-        .then(() => router.push(`/book/${obj.firebaseKey}`));
+        .then(() => router.push(`/books/${obj.firebaseKey}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createBook(payload).then(() => {
@@ -96,7 +96,7 @@ function BookForm({ obj }) {
           name="author_id"
           onChange={handleChange}
           className="mb-3"
-          value={obj.author_id} // FIXME: modify code to remove error
+          value={formInput.author_id} // FIXME: modify code to remove error
           required
         >
           <option value="">Select an Author</option>
