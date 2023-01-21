@@ -18,7 +18,7 @@ const getAuthors = (uid) => new Promise((resolve, reject) => {
 
 // FIXME: CREATE AUTHOR
 const createAuthor = (authorObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/books.json`, authorObj)
+  axios.post(`${dbUrl}/authors.json`, authorObj)
     .then((response) => {
       const payload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/authors/${response.data.name}.json`, payload)
@@ -64,6 +64,21 @@ const getAuthorBooks = (authorFirebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const favAuthors = (uid) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/authors.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    header: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const favorites = Object.values(data).filter((item) => item.favorite);
+      resolve(favorites);
+    })
+    .catch(reject);
+});
+
 export {
   getAuthors,
   createAuthor,
@@ -71,4 +86,5 @@ export {
   deleteSingleAuthor,
   updateAuthor,
   getAuthorBooks,
+  favAuthors,
 };

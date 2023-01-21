@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -19,6 +19,10 @@ function AuthorForm({ obj }) {
   const router = useRouter();
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (obj.firebaseKey) setFormInput(obj);
+  }, [obj, user]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
@@ -35,7 +39,7 @@ function AuthorForm({ obj }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createAuthor(payload).then(() => {
-        router.push('/');
+        router.push('/authors');
       });
     }
   };
@@ -81,7 +85,7 @@ function AuthorForm({ obj }) {
 
       </FloatingLabel>
       {/* IMAGE INPUT  */}
-      <FloatingLabel controlId="floatingInput2" label="Book Image" className="mb-3">
+      <FloatingLabel controlId="floatingInput2" label="Author Image" className="mb-3">
         <Form.Control
           type="url"
           placeholder="Enter an image url"

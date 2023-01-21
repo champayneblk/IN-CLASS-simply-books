@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { deleteAuthorBooks } from '../api/mergedData';
 
 function AuthorCard({ authorObj, onUpdate }) {
@@ -36,11 +36,11 @@ function AuthorCard({ authorObj, onUpdate }) {
 
 AuthorCard.propTypes = {
   authorObj: PropTypes.shape({
+    image: PropTypes.string,
     Email: PropTypes.string,
     firebaseKey: PropTypes.string,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
-    image: PropTypes.string,
     favorite: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
